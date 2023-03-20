@@ -11,4 +11,9 @@ public class MainController {
     public String index(){
         return "안녕하세요 sbb에 오신것을 환영합니다.";
     }
+
+    @GetMapping("/")
+    public String root(){
+        return "redirect:/question/list"; // localhost:8080 만 입력해도 localhost:8080/question/list 로 url이 바뀐다.
+    }
 }
