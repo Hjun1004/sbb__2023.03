@@ -1,20 +1,40 @@
-<table border="1">
-    <thead>
-    <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성일시</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="question, index : ${questionList}">
-        <td>
-            <a th:href="@{|/question/detail/${question.id}|}" th:text = "${question.id}"></a>
-        </td>
-        <td>
-            <a th:href="@{|/question/detail/${question.id}|}" th:text = "${question.subject}"></a>
-        </td>
-        <td>[[${question.create_date}]]</td>
-    </tr>
-    </tbody>
-</table>
+<style>
+    @font-face {
+        font-family: 'GmarketSansMedium';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    html > body{
+        font-family: "GmarketSansMedium";
+        text-underline-position: under;
+    }
+</style>
+<link rel="stylesheet" type="text/css" th:href="@{|/bootstrap.min.css|}">
+<div class="container my-3">
+    <table class="table" border="1">
+        <thead class = "table-dark">
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일시</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr th:each="question, loop : ${questionList}">
+            <!-- question의 고유번호가 아니라 목록의 순서대로 번호가 나오도록 하기위함 -->
+            <td>
+                <a th:href="@{|/question/detail/${question.id}|}" th:text="${loop.count}"></a>
+            </td>
+            <!--<td>
+                <a th:href="@{|/question/detail/${question.id}|}" th:text = "${question.id}"></a>
+            </td>-->
+            <td>
+                <a th:href="@{|/question/detail/${question.id}|}" th:text = "${question.subject}"></a>
+            </td>
+            <td>[[${#temporals.format(question.create_date, 'yyyy-MM-dd HH:mm')}]]</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
