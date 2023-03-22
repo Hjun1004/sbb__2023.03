@@ -1,5 +1,6 @@
-package com.mysite.sbb;
+package com.mysite.sbb.question;
 
+import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.questionRepository.QuestionRepository;
 import com.mysite.sbb.question.service.QuestionService;
@@ -24,7 +25,7 @@ import java.util.List;
 public class QuestionController {
     private final QuestionService questionService;
 
-    @GetMapping("/list")
+    @GetMapping("list")
     public String list(Model model){
         List<Question> questionsList = this.questionService.getlist();
         model.addAttribute("questionList", questionsList);
@@ -37,6 +38,7 @@ public class QuestionController {
         model.addAttribute("question", q);
         return "question_detail.html";
     }
+
 
 
 }

@@ -1,6 +1,47 @@
 <h1>
+    <span th:text="${id}"></span>번 질문 상세내용
+</h1>
+<h1>
     <th>[[${question.subject}]]</th>
 </h1>
 <div>
     <th>[[${question.content}]]</th>
 </div>
+
+<h5 th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h5>
+<div>
+    <ul>
+        <li th:each="answer : ${question.answerList}" th:text="|${answer.content}|">
+
+        </li>
+    </ul>
+</div>
+
+
+<form th:action="@{|/answer/create/${question.id}|}" method = "post">
+    <div>
+        <span>내용</span>
+        <br>
+        <textarea placeholder="내용" name = "content" rows = "15"></textarea>
+    </div>
+    <!--<input type="submit" value="답변등록">-->
+    <button type="submit">답변등록</button>
+</form>
+
+<!--
+<form th:action="@{|/answer/create/${question.id}|}" method = "post">
+    <div>
+        <label for="content"> 내용</label>
+        <br>
+        <textarea placeholder="내용" name = "content" rows = "15"></textarea>
+    </div>
+    <input type="submit" value="답변등록">
+</form>
+
+위 처럼 작성할 때는 id가 필요하다. 저렇게 되면
+<span>내용</span> 이걸 한 거럼 작성칸 위에 내용이라는
+글자가 나오는데 저렇게 하게되면
+내용 글자가 클릭이 가능하고 클릭하면 글을 작성하는 칸으로 이동해서
+글을 바로 쓸수가 있다.
+
+-->
