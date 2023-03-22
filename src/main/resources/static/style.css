@@ -1,0 +1,15 @@
+textarea{
+    width: 100%;
+}
+
+form > button[type=submit]{
+    margin-top: 10px;
+}
+
+form+div{
+    border: solid 1px black;
+}
+
+form + div>ul{
+    margin-top: 20px;
+}
