@@ -8,8 +8,10 @@
 <div>
     <th>[[${question.content}]]</th>
 </div> -->
+<head></head>
+
 <body>
-<div class = "container my-3">
+<div layout:fragment="content" class = "container my-3">
     <!-- 질문 -->
     <h2 class = "border-bottom py-2" th:text="${question.subject}"></h2>
     <div class="card my-3">
@@ -40,11 +42,14 @@
     <!-- 답변 반복 끝 -->
     <!-- 답변 작성 -->
 
-    <form th:action="@{|/answer/create/${question.id}|}" method = "post" class="my-3">
+    <form th:action="@{|/answer/create/${question.id}|}" method="post" class="my-3" th:object="${answerForm}">
+        <div class="alert alert-warning" role="alert" th:if="${#fields.hasAnyErrors()}">
+            <div th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
+        </div>
         <div>
             <span class="ms-2">답변을 입력하세요.</span>
             <br>
-            <textarea placeholder="내용" name = "content" rows = "10" class="form-control"></textarea>
+            <textarea placeholder="내용" th:field="*{content}" rows = "10" class="form-control"></textarea>
         </div>
         <!--<input type="submit" value="답변등록">-->
         <button type="submit" class="btn btn-primary my-2">답변등록</button>

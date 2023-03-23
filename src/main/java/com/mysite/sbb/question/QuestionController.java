@@ -1,5 +1,6 @@
 package com.mysite.sbb.question;
 
+import com.mysite.sbb.answer.AnswerForm;
 import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.questionRepository.QuestionRepository;
@@ -35,13 +36,14 @@ public class QuestionController {
     }
 
     @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id){
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm){
         Question q = this.questionService.getQuestion(id);
         model.addAttribute("question", q);
         return "question_detail.html";
     }
 
     @GetMapping("/create")
+    // @Valid를 붙여야 QuestionForm.java내의 NotBlank나 Size가 동작한다.
     public String questionCreate2(QuestionForm questionForm){
         return "question_form";
     }

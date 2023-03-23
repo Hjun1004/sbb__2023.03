@@ -27,8 +27,6 @@ public class QuestionService {
         else{
             throw new DataNotFoundException("question not found"); //DataNotFoundException이 발생하면 @ResponseStatus 애너테이션에 의해 404 오류(HttpStatus.NOT_FOUND)가 나타날 것이다.
         }
-
-
     }
 
     public Question create(String subject, String content) {
