@@ -30,4 +30,12 @@ public class QuestionService {
 
 
     }
+
+    public Question create(String subject, String content) {
+        Question q = new Question();
+        q.setSubject(subject);
+        q.setContent(content);
+        questionRepository.save(q);
+        return q;
+    }
 }
