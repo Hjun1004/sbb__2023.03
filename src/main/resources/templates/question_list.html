@@ -1,25 +1,16 @@
-<style>
-    @font-face {
-        font-family: 'GmarketSansMedium';
-        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-        font-weight: normal;
-        font-style: normal;
-    }
+<html layout:decorate="~{layout}"></html>
 
-    html > body{
-        font-family: "GmarketSansMedium";
-        text-underline-position: under;
-    }
-</style>
-<link rel="stylesheet" type="text/css" th:href="@{|/bootstrap.min.css|}">
-<div class="container my-3">
+<head></head>
+
+<body>
+<div layout:fragment="content" class="container my-3">
     <table class="table" border="1">
         <thead class = "table-dark">
-            <tr>
-                <th>번호</th>
-                <th>제목</th>
-                <th>작성일시</th>
-            </tr>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성일시</th>
+        </tr>
         </thead>
         <tbody>
         <tr th:each="question, loop : ${questionList}">
@@ -38,3 +29,4 @@
         </tbody>
     </table>
 </div>
+</body>
