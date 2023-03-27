@@ -2,14 +2,12 @@ package com.mysite.sbb.question.entity;
 
 import com.mysite.sbb.answer.entity.Answer;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
@@ -20,6 +18,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @EntityListeners(AuditingEntityListener.class)
 @Setter
 @Getter
+@ToString
 public class Question {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -42,5 +41,10 @@ public class Question {
     // 다만 만들면 자바에서 해당 객체(질문객체)에서 관련된 답변들을 찾을 때 편하다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) //@OneToMany 애너테이션에 사용된 mappedBy는 참조 엔티티의 속성명을 의미
     // 질문이 삭제되면 달렸던 답변들도 다 삭제되게 함
-    private List<Answer> answerList;
+    private List<Answer> answerList = new ArrayList<>();
+
+    public void addAnswer(Answer a) {
+        a.setQuestion(this);
+        answerList.add(a);
+    }
 }

@@ -4,6 +4,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap JS-->
+    <script th:src="@{/bootstrap.min.js}"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
     <!-- sbb CSS -->
@@ -12,15 +14,8 @@
 </head>
 <body>
 
-<div class="container">
-    <h1>SBB!</h1>
-    <!-- ul>li*2>a[href="#"]{메뉴 $} -->
-    <ul class="d-flex" style="gap:30px">
-        <li><a href="/question/list">리스트</a></li>
-        <li><a href="/question/create">질문등록</a></li>
-        <li><a href="/sbb">SBB 란</a></li>
-    </ul>
-</div>
+<!-- 네비게이션바 -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
 
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content"></th:block>

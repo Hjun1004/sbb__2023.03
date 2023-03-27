@@ -2,10 +2,7 @@ package com.mysite.sbb.answer.entity;
 
 import com.mysite.sbb.question.entity.Question;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -19,6 +16,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @EntityListeners(AuditingEntityListener.class)
 @Setter
 @Getter
+@ToString
 public class Answer {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -31,5 +29,6 @@ public class Answer {
     private LocalDateTime create_date;
 
     @ManyToOne // 다른 엔티티 클래스 리모콘을 저장할 때는 꼭 관계를 적어준다.
+    @ToString.Exclude
     private Question question;
 }

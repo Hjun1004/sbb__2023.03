@@ -4,6 +4,93 @@
 
 <body>
 <div layout:fragment="content" class="container my-3">
+
+    <!--/*
+    <table class="table">
+        <thead class="table-dark">
+        <tr>
+            <th>속성</th>
+            <th>설명</th>
+            <th>값</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>paging.isEmpty()</th>
+            <td>
+                페이지 존재 여부 (게시물이 있으면 false, 없으면 true)
+            </td>
+            <td>
+                [[${paging.isEmpty()}]]
+            </td>
+        </tr>
+
+        <tr>
+            <th>paging.totalElements</th>
+            <td>
+                전체 게시물 개수
+            </td>
+            <td>
+                [[${paging.totalElements}]]
+            </td>
+        </tr>
+
+        <tr>
+            <th>paging.totalPages</th>
+            <td>
+                전체 페이지 개수
+            </td>
+            <td>
+                [[${paging.totalPages}]]
+            </td>
+        </tr>
+
+        <tr>
+            <th>paging.size</th>
+            <td>
+                페이지당 보여줄 게시물 개수
+            </td>
+            <td>
+                [[${paging.size}]]
+            </td>
+        </tr>
+
+        <tr>
+            <th>paging.number</th>
+            <td>
+                현재 페이지 번호
+            </td>
+            <td>
+                [[${paging.number}]]
+            </td>
+        </tr>
+
+        <tr>
+            <th>paging.hasPrevious</th>
+            <td>
+                이전 페이지 존재 여부
+            </td>
+            <td>
+                [[${paging.hasPrevious}]]
+            </td>
+        </tr>
+
+        <tr>
+            <th>paging.hasNext</th>
+            <td>
+                다음 페이지 존재 여부
+            </td>
+            <td>
+                [[${paging.hasNext}]]
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <hr>
+   */ -->
+
     <table class="table" border="1">
         <thead class = "table-dark">
         <tr>
@@ -13,7 +100,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="question, loop : ${questionList}">
+        <tr th:each="question, loop : ${paging}">
             <!-- question의 고유번호가 아니라 목록의 순서대로 번호가 나오도록 하기위함 -->
             <td>
                 <a th:href="@{|/question/detail/${question.id}|}" th:text="${loop.count}"></a>
@@ -28,6 +115,41 @@
         </tr>
         </tbody>
     </table>
+
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!paging.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${paging.number == 0} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=0|}">
+                    <span>&laquo;</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+                <a class="page-link"
+                   th:href="@{|?page=${paging.number - 1}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+            <li class="page-item" th:each="page: ${#numbers.sequence(0, paging.totalPages - 1)}"
+                th:classappend="${page == paging.number} ? 'active'"
+                th:if="${page >= paging.number - 5 and page <= paging.number + 5}">
+                <a th:text="${page}" class="page-link" th:href="@{|?page=${page}|}"></a>
+            </li>
+            <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.number+1}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+            <li class="page-item" th:classappend="${paging.number == paging.totalPages - 1} ? 'disabled'">
+                <a class="page-link" th:href="@{|?page=${paging.totalPages - 1}|}">
+                    <span>&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- 페이징처리 끝 -->
+
+
     <a th:href="@{/question/create}" class="btn btn-primary">질문 등록하기</a>
 </div>
 </body>

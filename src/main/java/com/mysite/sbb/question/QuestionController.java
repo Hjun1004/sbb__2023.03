@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,9 +30,9 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @GetMapping("list")
-    public String list(Model model){
-        List<Question> questionsList = this.questionService.getlist();
-        model.addAttribute("questionList", questionsList);
+    public String list(Model model, @RequestParam(defaultValue = "0") int page){ // int page 가 곧 name = page와 같다.
+        Page<Question> paging = questionService.getlist(page);
+        model.addAttribute("paging", paging);
         return "question_list.html";
     }
 
