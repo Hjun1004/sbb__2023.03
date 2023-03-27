@@ -31,7 +31,7 @@ public class Question {
     private String content;
 
     @CreatedDate
-    private LocalDateTime create_date;
+    private LocalDateTime createDate;
 
     // OneToMany는 자바세상에서의 편의를 위해서 필드를 생성했다.
     // 이 녀석은 실제 DB칼럼이 생성되지 않는다.

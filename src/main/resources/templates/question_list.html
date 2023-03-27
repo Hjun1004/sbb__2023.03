@@ -86,10 +86,11 @@
         </tr>
 
         </tbody>
+
     </table>
 
     <hr>
-   */ -->
+    */-->
 
     <table class="table" border="1">
         <thead class = "table-dark">
@@ -103,7 +104,7 @@
         <tr th:each="question, loop : ${paging}">
             <!-- question의 고유번호가 아니라 목록의 순서대로 번호가 나오도록 하기위함 -->
             <td>
-                <a th:href="@{|/question/detail/${question.id}|}" th:text="${loop.count}"></a>
+                <a th:href="@{|/question/detail/${question.id}|}" th:text="${paging.totalElements - (paging.number * paging.size)- loop.index}"></a>
             </td>
             <!--<td>
                 <a th:href="@{|/question/detail/${question.id}|}" th:text = "${question.id}"></a>
@@ -111,7 +112,7 @@
             <td>
                 <a th:href="@{|/question/detail/${question.id}|}" th:text = "${question.subject}"></a>
             </td>
-            <td>[[${#temporals.format(question.create_date, 'yyyy-MM-dd HH:mm')}]]</td>
+            <td>[[${#temporals.format(question.createDate, 'yyyy-MM-dd HH:mm')}]]</td>
         </tr>
         </tbody>
     </table>

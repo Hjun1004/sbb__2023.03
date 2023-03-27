@@ -26,7 +26,7 @@ public class Answer {
     private String content;
 
     @CreatedDate
-    private LocalDateTime create_date;
+    private LocalDateTime createDate;
 
     @ManyToOne // 다른 엔티티 클래스 리모콘을 저장할 때는 꼭 관계를 적어준다.
     @ToString.Exclude
