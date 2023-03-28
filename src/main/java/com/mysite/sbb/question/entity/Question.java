@@ -3,6 +3,8 @@ package com.mysite.sbb.question.entity;
 import com.mysite.sbb.answer.entity.Answer;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -41,10 +43,11 @@ public class Question {
     // 다만 만들면 자바에서 해당 객체(질문객체)에서 관련된 답변들을 찾을 때 편하다.
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) //@OneToMany 애너테이션에 사용된 mappedBy는 참조 엔티티의 속성명을 의미
     // 질문이 삭제되면 달렸던 답변들도 다 삭제되게 함
+    @LazyCollection(LazyCollectionOption.EXTRA) // answerList.size() 함수가 실행될 때 SELECT
     private List<Answer> answerList = new ArrayList<>();
 
     public void addAnswer(Answer a) {
-        a.setQuestion(this);
-        answerList.add(a);
+        a.setQuestion(this); // 넌 나랑 관련된 답변이야.
+        answerList.add(a); // 너는 나랑 관련되어 있는 답변들 중 하나야.
     }
 }
