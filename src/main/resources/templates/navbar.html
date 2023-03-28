@@ -8,7 +8,11 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">로그인</a>
+          <a sec:authorize="isAnonymous()" class="nav-link" href="/user/login">로그인</a>
+          <!-- 로그인이 안되어 있으면 로그인이 보임 -->
+          <a sec:authorize="isAuthenticated()" class="nav-link" href="javascript:;" onclick="this.nextElementSibling.submit();">로그아웃</a>
+          <!-- 로그인이 되어 있으면 로그아웃이 보임 -->
+          <form sec:authorize="isAuthenticated()" method="post" hidden th:action="@{/user/logout}"></form>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/user/signup">회원가입</a>

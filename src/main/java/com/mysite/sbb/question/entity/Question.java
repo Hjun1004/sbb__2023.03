@@ -1,11 +1,13 @@
 package com.mysite.sbb.question.entity;
 
 import com.mysite.sbb.answer.entity.Answer;
+import com.mysite.sbb.user.SiteUser;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
@@ -35,6 +37,9 @@ public class Question {
     @CreatedDate
     private LocalDateTime createDate;
 
+    @LastModifiedDate
+    private LocalDateTime modifyDate;
+
     // OneToMany는 자바세상에서의 편의를 위해서 필드를 생성했다.
     // 이 녀석은 실제 DB칼럼이 생성되지 않는다.
     // DB는 배열이나 리스트를 저장할 수 없다.
@@ -46,8 +51,13 @@ public class Question {
     @LazyCollection(LazyCollectionOption.EXTRA) // answerList.size() 함수가 실행될 때 SELECT
     private List<Answer> answerList = new ArrayList<>();
 
+    @ManyToOne
+    private SiteUser author;
+
     public void addAnswer(Answer a) {
         a.setQuestion(this); // 넌 나랑 관련된 답변이야.
         answerList.add(a); // 너는 나랑 관련되어 있는 답변들 중 하나야.
     }
+
+
 }
