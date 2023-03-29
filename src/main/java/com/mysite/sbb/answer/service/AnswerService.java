@@ -50,4 +50,8 @@ public class AnswerService {
         answerRepository.delete(answer);
     }
 
+    public void vote(Answer answer, SiteUser voter) {
+        answer.addVoter(voter);
+        answerRepository.save(answer);
+    }
 }

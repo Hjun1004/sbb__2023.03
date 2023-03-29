@@ -73,6 +73,14 @@ class SbbApplicationTests {
 		Question q2 = questionService.create("스프링부트 모델 질문입니다.", "id는 자동으로 생성되나요?", user1);
 
 		Answer a1 = answerService.create(q2, "네 자동으로 생성됩니다.", user2);
+
+		q1.addVoter(user1);
+		q1.addVoter(user2);
+		questionRepository.save(q1);
+
+		a1.addVoter(user1);
+		a1.addVoter(user2);
+		answerRepository.save(a1);
 	}
 
 	@Test

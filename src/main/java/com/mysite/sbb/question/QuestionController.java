@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -37,11 +38,13 @@ public class QuestionController {
     private final UserService userService;
 
     @GetMapping("list")
-    public String list(Model model, @RequestParam(defaultValue = "0") int page){ // int page 가 곧 name = page와 같다.
-        Page<Question> paging = questionService.getlist(page);
+    public String list(Model model, @RequestParam(defaultValue = "0") int page , String kw){ // int page 가 곧 name = page와 같다.
+        Page<Question> paging = questionService.getlist(page, kw);
         model.addAttribute("paging", paging);
+        //model.addAttribute("kw",kw);
         return "question_list.html";
     }
+    // @RequestParam(value = "kw", defaultValue = "")
 
     @GetMapping(value = "/detail/{id}")
     public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm){
@@ -115,5 +118,14 @@ public class QuestionController {
         return "redirect:/";
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id){
+        Question question = questionService.getQuestion(id);
+        SiteUser siteUser = userService.getUser(principal.getName());
+
+        questionService.vote(question, siteUser);
+        return "redirect:/question/detail/%d".formatted(id);
+    }
 
 }

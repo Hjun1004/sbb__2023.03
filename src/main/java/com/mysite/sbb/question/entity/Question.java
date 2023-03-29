@@ -13,6 +13,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.LinkedHashSet;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -54,9 +56,16 @@ public class Question {
     @ManyToOne
     private SiteUser author;
 
+    @ManyToMany
+    private Set<SiteUser> voters = new LinkedHashSet<>();
+
     public void addAnswer(Answer a) {
         a.setQuestion(this); // 넌 나랑 관련된 답변이야.
         answerList.add(a); // 너는 나랑 관련되어 있는 답변들 중 하나야.
+    }
+
+    public void addVoter(SiteUser voter){
+        this.voters.add(voter);
     }
 
 
